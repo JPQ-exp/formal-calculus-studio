@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formal Calculus v2.2 - Interactive LaTeX & Dual-Engine Studio</title>
+  <!-- KaTeX for Professional LaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Screen Reader Live Announcements -->
+  <div id="srLiveRegion" class="sr-only" aria-live="polite" style="position:absolute;left:-9999px;width:1px;height:1px;"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-group">
+      <h1>Formal Calculus <span class="badge">v2.2 Dual Studio</span></h1>
+      <p>Forrester Stock-and-Flow Diagrams & Phase Simulation with Dedicated Controls</p>
+    </div>
+
+    <!-- Master Framework Toggle -->
+    <div class="global-toggle-box">
+      <label class="toggle-switch" for="fcToggle">
+        <input type="checkbox" id="fcToggle" checked>
+        <span class="slider"></span>
+      </label>
+      <span class="toggle-label" id="fcToggleLabel" style="color:var(--accent-green)">
+        Formal Calculus Mode: ON (Manifold-Projected)
+      </span>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tabs-nav" role="tablist" aria-label="Application Sections">
+    <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tab-studio">
+      <span>📐</span> 1. Interactive LaTeX Studio
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-forrester">
+      <span>📊</span> 2. Forrester Stock-and-Flow
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-simulation">
+      <span>🚀</span> 3. Dynamical Simulation
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-substrate">
+      <span>🕸️</span> 4. Algebraic Substrate
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-diagnostics">
+      <span>🔬</span> 5. Engineering Diagnostics (SINDy & Safety)
+    </button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-accessibility">
+      <span>♿</span> 6. Accessibility & Settings
+    </button>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main>
+
+    <!-- Tab 1: Interactive LaTeX Studio (Equations & Live KaTeX) -->
+    <section id="tab-studio" class="tab-panel active" role="tabpanel">
+
+      <!-- Preset Model Selector -->
+      <div class="card">
+        <h2><span>⚡</span> Quick Model Presets (1-Click Load)</h2>
+        <div class="preset-bar" id="presetBar"></div>
+      </div>
+
+      <div class="panel-grid-2">
+        <!-- LaTeX Equation Editor -->
+        <div class="card">
+          <h2><span>✏️</span> Paste / Edit LaTeX Equations</h2>
+
+          <!-- Equation x' -->
+          <div class="equation-row">
+            <div class="equation-label">
+              <span>\dot{x} / \frac{dx}{dt} Equation:</span>
+              <span style="color:var(--text-muted); font-size:0.75rem;">LaTeX syntax supported</span>
+            </div>
+            <div class="equation-input-wrap">
+              <input type="text" id="inputDx" class="latex-input" value="\alpha x - \beta x y" placeholder="e.g. \alpha x - \beta x y">
+            </div>
+            <div class="katex-preview" id="previewDx"></div>
+          </div>
+
+          <!-- Equation y' -->
+          <div class="equation-row">
+            <div class="equation-label">
+              <span>\dot{y} / \frac{dy}{dt} Equation:</span>
+              <span style="color:var(--text-muted); font-size:0.75rem;">LaTeX syntax supported</span>
+            </div>
+            <div class="equation-input-wrap">
+              <input type="text" id="inputDy" class="latex-input" value="\delta x y - \gamma y" placeholder="e.g. \delta x y - \gamma y">
+            </div>
+            <div class="katex-preview" id="previewDy"></div>
+          </div>
+
+          <!-- Invariant V(x, y) -->
+          <div class="equation-row">
+            <div class="equation-label">
+              <span>Conserved Invariant / First Integral V(x, y):</span>
+              <span style="color:var(--accent-green); font-size:0.75rem;">Used for Manifold Projection</span>
+            </div>
+            <div class="equation-input-wrap">
+              <input type="text" id="inputInv" class="latex-input" value="\delta x - \gamma \ln(x) + \beta y - \alpha \ln(y)" placeholder="Optional: e.g. 0.5 y^2 - \cos(x)">
+            </div>
+            <div class="katex-preview" id="previewInv"></div>
+          </div>
+        </div>
+
+        <!-- Dynamic Parameters Auto-Discovered from Equations -->
+        <div class="card">
+          <h2><span>🎛️</span> Auto-Discovered Parameters</h2>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">
+            Any symbols written in your LaTeX equations (e.g. <code>\alpha, \beta, \delta, \gamma, \mu, A, B</code>) automatically generate live interactive sliders:
+          </p>
+          <div class="dynamic-params-grid" id="dynamicParamsContainer"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Tab 2: Forrester Stock-and-Flow Diagram (With Dedicated Controls) -->
+    <section id="tab-forrester" class="tab-panel" role="tabpanel">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+          <h2><span>📊</span> Forrester Stock-and-Flow Architecture</h2>
+          <div style="font-size:0.85rem; color:var(--text-muted);">
+            Classical System Dynamics: Stocks (Levels), Valved Flows (Rates), Cloud Sources/Sinks, and Information Links
+          </div>
+        </div>
+
+        <!-- Dedicated Forrester Diagram Control Toolbar -->
+        <div class="dedicated-toolbar">
+          <div class="toolbar-group">
+            <span style="font-size:0.85rem; font-weight:700;">Diagram State:</span>
+            <span class="status-badge badge-running" id="diagStatusBadge">RUNNING</span>
+            <button class="btn btn-primary" id="diagRunBtn">▶ Run Diagram</button>
+            <button class="btn" id="diagStopBtn">⏸ Stop Diagram</button>
+            <button class="btn" id="diagResetBtn">🔄 Reset Stocks</button>
+          </div>
+
+          <div class="toolbar-group">
+            <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="syncDiagramCheck" checked>
+              <span>Synchronize with Simulation</span>
+            </label>
+            <span style="color:var(--border-color);">|</span>
+            <label for="diagSpeedSlider" style="font-size:0.82rem; font-weight:600;">Speed: <span id="diagSpeedVal">1.0x</span></label>
+            <input type="range" id="diagSpeedSlider" min="0.1" max="3.0" step="0.1" value="1.0" style="width:100px;">
+          </div>
+        </div>
+
+        <canvas id="forresterCanvas" class="sim-canvas"></canvas>
+
+        <div style="margin-top:0.85rem; font-size:0.85rem; color:var(--text-muted);">
+          <strong>Universal Diagram Key:</strong> 
+          <span style="color:#00d2ff;">■ Stocks [X, Y]</span> (Rectangles with real-time liquid level) &nbsp;|&nbsp;
+          <span style="color:#00f0aa;">⋈ Valves</span> (Flow rates with control handles) &nbsp;|&nbsp;
+          <span style="color:#486581;">☁ Clouds</span> (Boundary reservoirs) &nbsp;|&nbsp;
+          <span style="color:#3a86ff;">⤏ Blue Dashed Arrows</span> (Causal parameter & stock information feedback)
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Dynamical Simulation & Phase Portrait (With Dedicated Controls) -->
+    <section id="tab-simulation" class="tab-panel" role="tabpanel">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.5rem;">
+          <h2><span>🚀</span> Phase Portrait & Vector Field Flow</h2>
+          <div style="font-size:0.85rem; color:var(--text-muted);">
+            High-Performance 60fps Numerical Integrator with Manifold Level-Set Projection
+          </div>
+        </div>
+
+        <!-- Dedicated Simulation Control Toolbar -->
+        <div class="dedicated-toolbar">
+          <div class="toolbar-group">
+            <span style="font-size:0.85rem; font-weight:700;">Sim State:</span>
+            <span class="status-badge badge-running" id="simStatusBadge">RUNNING</span>
+            <button class="btn btn-primary" id="simRunBtn">▶ Run Simulation</button>
+            <button class="btn" id="simStopBtn">⏸ Stop Simulation</button>
+            <button class="btn" id="simResetBtn">🔄 Reset Simulation</button>
+          </div>
+
+          <div class="toolbar-group">
+            <button class="btn btn-active" id="toggleVfBtn">🌊 Vector Field</button>
+            <button class="btn" id="soundBtn">🔈 Sound</button>
+            <button class="btn" id="exportCsvBtn">📥 Export CSV</button>
+            <span style="color:var(--border-color);">|</span>
+            <label for="speedSlider" style="font-size:0.82rem; font-weight:600;">Speed: <span id="speedVal">1.0x</span></label>
+            <input type="range" id="speedSlider" min="0.1" max="3.0" step="0.1" value="1.0" style="width:100px;">
+          </div>
+        </div>
+
+        <canvas id="phaseCanvas" class="sim-canvas"></canvas>
+
+        <div class="telemetry-row">
+          <div class="telemetry-item">
+            <div class="telemetry-label">Primary State X</div>
+            <div class="telemetry-val" id="telX" style="color:var(--accent-cyan)">2.0000</div>
+          </div>
+          <div class="telemetry-item">
+            <div class="telemetry-label">Primary State Y</div>
+            <div class="telemetry-val" id="telY" style="color:var(--accent-amber)">1.0000</div>
+          </div>
+          <div class="telemetry-item">
+            <div class="telemetry-label">Invariant Drift (|V - V₀|)</div>
+            <div class="telemetry-val good" id="telDrift">9.99e-16</div>
+          </div>
+          <div class="telemetry-item">
+            <div class="telemetry-label">Spectral Abscissa Re(λ)</div>
+            <div class="telemetry-val good" id="telAbscissa">0.00e+00</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Hypergraph & Stoichiometry Substrate -->
+    <section id="tab-substrate" class="tab-panel" role="tabpanel">
+      <div class="card">
+        <h2><span>📐</span> Formal Calculus Algebraic Substrate</h2>
+        <div class="math-block">
+          d<strong>x</strong>/dt = [ <strong>Δ_res</strong> ; <strong>0</strong> ] <strong>v</strong>(<strong>x</strong>) - <strong>Λ</strong><strong>x</strong> + <strong>Q</strong><sub>M</sub><strong>x</strong>
+        </div>
+        <p style="font-size:0.9rem; color:var(--text-muted);">
+          Maps continuous differential equations into partitioned incidence operators where consumable stocks obey conservation laws and catalytic regulators carry zero net flux.
+        </p>
+      </div>
+
+      <div class="panel-grid-2">
+        <div class="card">
+          <h2><span>🔢</span> Stoichiometric Incidence Block</h2>
+          <div class="math-block">
+            <strong>Δ_res</strong> = <span class="matrix-display"> 1 &nbsp; -1<br> 0 &nbsp;&nbsp; η</span> &nbsp;&nbsp;&nbsp;&nbsp;
+            <strong>Δ_ctl</strong> = <span class="matrix-display"> 0 &nbsp; 0 </span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Valuation covectors <strong>w</strong> in the left null-space of <strong>Δ_res</strong> define exact conserved physical quantities.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2><span>🛡️</span> Mechanized Lean 4 Proof Badges</h2>
+          <div class="math-block" style="font-size:0.85rem;">
+            theorem catalytic_invariance : fire e x (Sum.inr c) = x (Sum.inr c)<br><br>
+            theorem valuation_conservation : valuation w (fire e x) = valuation w x<br><br>
+            theorem no_continuous_exact_decider : Continuous f → ¬ (∀ x, f x = exactZero x)
+          </div>
+          <p style="font-size:0.85rem; color:var(--accent-green); font-weight:600;">
+            ✓ Formally certified in Lean 4 / Mathlib.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 5: Engineering Diagnostics (Live SINDy & Farkas Safety) -->
+    <section id="tab-diagnostics" class="tab-panel" role="tabpanel">
+
+      <!-- SINDy Machine Learning Discovery Card -->
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+          <h2><span>🔬</span> SINDy Data-Driven Model Discovery (Algorithm 2)</h2>
+          <div class="controls-row" style="margin-top:0;">
+            <button class="btn btn-primary" id="runSindyBtn">⚡ Invert & Discover from Trajectory</button>
+            <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+              <input type="checkbox" id="autoSindyCheck" checked>
+              <span>Live Continuous Discovery</span>
+            </label>
+          </div>
+        </div>
+
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          Ingests real-time trajectory snapshots and solves $\dot{\mathbf{X}} = \mathbf{\Theta} \boldsymbol{\Psi}(\mathbf{X})$ via one-step Moore–Penrose pseudoinverse regression ($\dot{\mathbf{X}}\boldsymbol{\Psi}^\dagger$) to discover the true underlying equations, conversion efficiency $\eta$, and left null-space valuation covector $\mathbf{w}$.
+        </p>
+
+        <!-- Live Discovered Equations in KaTeX -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1rem;">
+          <div style="background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:0.75rem;">
+            <div style="font-size:0.78rem; color:var(--accent-cyan); font-weight:700; text-transform:uppercase;">Discovered \dot{x} Equation:</div>
+            <div id="sindyLatexDx" style="font-size:1.1rem; padding:0.4rem 0;">\dot{x} = 1.2000 x - 0.6000 x y</div>
+          </div>
+          <div style="background-color:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:6px; padding:0.75rem;">
+            <div style="font-size:0.78rem; color:var(--accent-amber); font-weight:700; text-transform:uppercase;">Discovered \dot{y} Equation:</div>
+            <div id="sindyLatexDy" style="font-size:1.1rem; padding:0.4rem 0;">\dot{y} = 0.3000 x y - 0.8000 y</div>
+          </div>
+        </div>
+
+        <!-- Telemetry & Null-Space Leakage Proof -->
+        <div class="telemetry-row">
+          <div class="telemetry-item">
+            <div class="telemetry-label">Snapshots Ingested (K)</div>
+            <div class="telemetry-val" id="sindySnapshots" style="color:var(--text-main);">0</div>
+          </div>
+          <div class="telemetry-item">
+            <div class="telemetry-label">Efficiency Ratio η̂ = δ̂ / β̂</div>
+            <div class="telemetry-val" id="sindyEta" style="color:var(--accent-green);">0.5000</div>
+          </div>
+          <div class="telemetry-item">
+            <div class="telemetry-label">Valuation Covector w_res</div>
+            <div class="telemetry-val" id="sindyWres" style="font-size:0.95rem; color:var(--accent-cyan);">[0.3000, 0.6000]ᵀ</div>
+          </div>
+          <div class="telemetry-item">
+            <div class="telemetry-label">Null-Space Leakage (wᵀΔ)</div>
+            <div class="telemetry-val good" id="sindyLeakage">-2.22e-17</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Farkas Reachability Verifier -->
+      <div class="card">
+        <h2><span>🛡️</span> Farkas Lemma Safety Verifier (Theorem 2.3)</h2>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          Verify whether an unsafe failure state $(X_{\text{unsafe}}, Y_{\text{unsafe}})$ can ever be reached from the current operational orbit:
+        </p>
+        <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem; flex-wrap:wrap;">
+          <input type="number" id="farkasTargetX" class="input-num" value="5.5" step="0.1" placeholder="Target X" style="width:160px;">
+          <input type="number" id="farkasTargetY" class="input-num" value="4.0" step="0.1" placeholder="Target Y" style="width:160px;">
+          <button class="btn btn-primary" id="farkasCheckBtn">Verify Reachability / Safety</button>
+        </div>
+        <div id="farkasResult" class="math-block" style="font-size:0.88rem;">
+          Click 'Verify Reachability / Safety' to compute polynomial unreachability certificate.
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Tab 6: Accessibility & Settings -->
+    <section id="tab-accessibility" class="tab-panel" role="tabpanel">
+      <div class="card">
+        <h2><span>♿</span> Universal Accessibility & Preferences</h2>
+        <div class="controls-row">
+          <button class="btn" id="contrastToggle">Toggle High Contrast (WCAG AAA)</button>
+        </div>
+        <div style="margin-top:1.25rem;">
+          <h3 style="font-size:1rem; margin-bottom:0.5rem; color:var(--accent-cyan)">Keyboard Navigation Cheatsheet:</h3>
+          <ul style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted); line-height:1.8;">
+            <li><strong>[Space]</strong> : Play / Pause real-time simulation</li>
+            <li><strong>[R]</strong> : Reset system orbits</li>
+            <li><strong>[T]</strong> : Toggle Formal Calculus Mode (ON / OFF)</li>
+            <li><strong>[1] - [6]</strong> : Instant jump between application tabs</li>
+            <li><strong>[Click Canvas]</strong> : Click anywhere on the phase portrait to spawn a new trajectory</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Persistent Bottom Dock -->
+  <footer>
+    <div style="display:flex; align-items:center;">
+      <span class="live-indicator"></span>
+      <span>Engine: <strong>Interactive LaTeX + Forrester + SINDy Discovery Core</strong></span>
+    </div>
+    <div class="footer-metrics">
+      <span>Drift: <strong id="footDrift" style="color:var(--accent-green)">9.99e-16</strong></span>
+      <span>Spectral Abscissa: <strong id="footAbscissa" style="color:var(--accent-green)">0.00e+00</strong></span>
+      <span>WCAG: <strong>AAA Compliant</strong></span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="math_parser.js"></script>
+  <script src="forrester.js"></script>
+  <script src="sindy.js"></script>
+  <script src="wasm_b64.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

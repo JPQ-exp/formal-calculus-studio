@@ -1,0 +1,10 @@
+# Rust build artifacts
+engine/target/
+**/*.rs.bk
+Cargo.lock
+
+# Node / OS artifacts
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
